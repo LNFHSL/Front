@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			ul{
+				list-style: none;
+			}
+			.aaa{margin:0 5px;}
+			.aaa ul li{
+				float: left;
+				margin: 0 30px;
+			}
+			.one{
+				margin: 0 10px;
+			}
+			.two{
+				margin: 0 33px;
+				display: inline-block;
+			}
+			.three{
+				margin: 0 60px;
+			}
+		</style>
+	</head>
+	
+
+	<body>
+		<div id="app">
+			<div>
+				<input type="text" placeholder="spm" v-model="aa"><br>
+				<input type="text" placeholder="spm" v-model="bb">
+				<input type="button"  @click="tj()" value="添加">
+			</div>
+			<div class="aaa"> <ul >
+		  	<li>名称</li>
+		  	<li>数量</li>
+		  	<li>价格</li>
+		  	<li>操作</li>
+		  </ul></div><br />
+			
+			
+			<ul>
+				<li v-for="(com,num) in b">
+					<input type="checkbox"  class="one"/>
+					{{com.name}}
+				<div class="two" ><b>-</b><input type="text" size="4px" /><b @click="increase()">+</b></div>
+					{{com.jg}}
+					<input type="button"  value="删除" @click="del(index)" class="three"/>
+				</li>
+			</ul>
+			<div>
+
+			
+
+		<script type="text/javascript">
+			new Vue({
+						el: "#app",
+						data: {
+							aa:null, 
+							bb:null,
+							b:[
+							{
+                               name:'苹果',
+                               jg:'5' 
+							},
+							{
+                               name:'香蕉',
+                               jg:'2'   
+							},
+							{
+                               name:'橘子',
+                               jg:'4' 
+							}
+							],
+						},
+						 methods:{
+					    	tj:function(){
+					    		this.b.push({
+					    			name:this.aa,
+					    			jg:this.bb
+					    		})
+					    		
+					    	},
+					    	del:function(index){
+					    		this.b.splice(index,1) 
+					    	},
+					    	increase:function(){
+					    		
+					    	}
+					    }
+					   
+
+						});
+		</script>
+
+	</body>
+
+</html>

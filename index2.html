@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<div>
+				<input type="text" placeholder="spm" v-model="aa"><br>
+				<input type="text" placeholder="spm" v-model="bb">
+				<input type="button"  @click="tj()" value="添加">
+			</div>
+			
+			
+			
+			<ul>
+				<li v-for="(com,num) in b">
+					商品{{num+1}}名字：{{com.name}}<br />
+					商品价格：{{com.jg}}
+				</li>
+			</ul>
+			<div>
+
+			
+
+		<script type="text/javascript">
+			new Vue({
+						el: "#app",
+						data: {
+							aa:null, 
+							bb:null,
+							b:[
+							{
+                               name:'苹果',
+                               jg:'5' 
+							},
+							{
+                               name:'香蕉',
+                               jg:'2'   
+							},
+							{
+                               name:'橘子',
+                               jg:'4' 
+							}
+							],
+						},
+						 methods:{
+					    	tj:function(){
+					    		this.b.push({
+					    			name:this.aa,
+					    			jg:this.bb
+					    		})
+					    		
+					    	}
+					    }
+					   
+
+						});
+		</script>
+
+	</body>
+
+</html>

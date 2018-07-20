@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>点击显示隐藏</title>
+</head>
+<style type="text/css">
+    .item {
+      border:1px solid #333;
+      padding:10px 20px;
+      margin:5px;
+      background-color: #f5f5f5; 
+    }
+    .item-bd {
+        display: none;
+    }
+    .item.open .item-bd {display: block;}
+</style>
+<body>
+<script src="js/vue.js"></script>
+  <div id="list">
+    <div class="item" v-for="(item, index) in items" @click="toggle(item)" :class="{'open':item.show}">
+        <div class="item-hd">{{index+1}}</div>
+        <div class="item-bd">{{item.content}}</div>
+    </div>
+    </div>
+    <script type="text/javascript">
+        var data =  [{
+          content: 'aaaaaaaaaa',
+        }, {
+          content: 'bbbbbbbbbb',
+        }, {
+          content: 'cccccccccc',
+        }];
+        data.map(function(item){
+          item.show = false;
+        });
+        new Vue({
+            el: '#list',
+            data : {
+                items: data
+            },
+            methods: {
+            toggle: function(item) {
+              item.show = !item.show;
+            }
+          }
+        })
+    </script>
+</body>
+</html>

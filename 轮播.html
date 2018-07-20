@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+			 margin: 0;
+			 padding: 0;
+			 list-style: none;
+			}
+			.box{
+				width: 560px;
+				margin: 100px auto;
+				overflow: hidden;  
+				
+			}
+			.box .left{
+				width: 500px;
+				float: left;
+				border: 1px solid #ccc;
+				box-sizing: border-box;
+				position:relative;
+			}
+			.box .left img{
+				width: 100%;
+			}
+			.box .left .text{
+				width: 100%;
+				background: rgba(0,0,0,.7);
+				text-align: center;
+				color: #fff;
+				height: 30px;
+				line-height: 30px;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			.box .left .bootom-text{
+				top: inherit;
+				bottom: 0px;
+			}
+			
+			.box .right{
+				width: 50px;
+				margin-left: 10px;
+				float: right ;
+			}
+		
+			
+			ul li{
+			width: 30px;
+			height: 30px;	
+			 background: blue;
+			 text-align: center;
+			 line-height:30px ;
+			}
+			ul li.cur{
+				background: red;
+			}
+			
+			
+			ul li+li{
+				margin-top: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="left">
+				<p class="text top-text">1/4</p>
+				<img class="img" src="img/1.jpg" />
+				<p class="text bootom-text">我爱学习</p>
+			</div>
+			<div class="right">
+				<ul>
+					<li class="cur">1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+				</ul>
+			</div>
+
+		</div>
+		
+	</body>
+	
+	<script>
+		var box=document.querySelector(".box");
+		var top_text=box.querySelector(".text.top-text");      /*类与类之间不能有空格，不然会报错*/
+		var bottom_text=box.querySelector(".text.bootom-text");
+		var imgpath=box.querySelector(".img");
+		var aBtn=box.querySelectorAll("ul li" )
+		var timer=null;
+		var key=0;
+		
+		var imgbox=["img/1.jpg","img/2.jpg","img/3.jpg","img/4.jpg"];
+		var textbox=["我爱学习","学习使我快乐","代码让我精神","加班写代码"];
+		
+		init();
+		autoplay();
+		
+		/*上面是获取设置初始值的*/
+		function init(){     //为了方便封装了下面三行代码
+		imgpath.src=imgbox[key] ;
+		bottom_text.innerHTML=textbox[key]
+	    top_text.innerHTML=key+1+"/4"; 
+		}
+		
+		    
+		for(var i=0;i<aBtn.length;i++){
+			aBtn[i].index=i;
+			aBtn[i].onclick=function(){    //为aBtn[i]鼠标注册事件
+				for(var i=0;i<aBtn.length;i++){
+				  aBtn[i].className=""
+				}
+				this.className="cur"   //this 当前 
+				
+				key=this.index;
+			  init();    //
+			}
+		}
+		
+		function autoplay(){
+			clearInterval(timer);
+			 timer=setInterval(function(){
+		    	key++;
+		    	key>=4 ? key=0:key
+		    	for(var i=0;i<aBtn.length;i++){
+				  aBtn[i].className=""
+				}
+				 aBtn[key].className="cur"
+		    	init();
+		    },2000)
+			
+		}
+		   
+		box.onmousemove=function(){
+			clearInterval(timer);
+		}
+		box.onmouseout=function(){
+			autoplay()
+		}
+		
+	</script>
+	
+</html>

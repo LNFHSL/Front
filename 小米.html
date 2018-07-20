@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script src="js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			header img {
+				background-size: contain;
+				width: 100%;
+			}
+			
+			.left {
+				float: left;
+				width: 300px;
+			}
+			
+			.right {
+				float: right;
+				width: 700px;
+			}
+			
+			.zt {
+				color: #CCCCCC;
+				size: a3;
+			}
+			
+			a {
+				color: red;
+			}
+			
+			.dz {
+				border: 1px solid #CCCCCC;
+				padding: 50px 0;
+				padding-left: 20px;
+			}
+			
+			.one {
+				float: left;
+				border: 1px solid #CCCCCC;
+				margin: 0 20px;
+				display: block;
+				padding: 20px;
+				cursor: pointer
+			}
+			
+			.active {
+				border: 1px solid orange;
+				cursor: pointer
+			}
+			
+			.actived {
+				border: 1px solid orange;
+				cursor: pointer
+			}
+			
+			.activeb {
+				border: 1px solid orange;
+				cursor: pointer
+			}
+			.total{
+				width: 500px;
+				height: 200px;
+				background: #F5F5F5;
+				margin: 200px 0;
+			}
+			.dd{
+				display: inline-block;
+				margin:0 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<header>
+				<img src="img/小米.png" />
+
+			</header>
+			<section>
+				<div class="left" v-model="tp">
+					<img :src="img"/>
+					
+				</div>
+				
+				<div class="right">
+					<h1>小米8 SE</h1>
+					<p class="zt">骁龙710全球首发 / AI 超感光双摄 / 5.88" 全面屏 / 前置2000万柔光自拍 / 三星 AMOLED 屏幕 /<br /> 3120mAh 长续航 / 【抢购以最终支付成功为准，加入购物车后请尽快付款，避免抢购失败】</p>
+					<a>{{this.goods_price+this.goods_Insurance}}元</a>
+					<!--  这里要做交互-->
+					<popup v-model="popupStatu">
+						<input type="text" placeholder="请输入地址" />
+						<b @click="popupStatu=false" style="cursor:pointer">x</b>
+					</popup>
+					<hr />
+					<div class="dz">
+						地址： <span>广东 广州市 荔枝区 海龙街道</span>
+						<a @click="popupStatu=true" style="cursor:pointer">修改</a>
+						<!--  这里要做交互-->
+						<br>
+						<a>有现货</a>
+					</div>
+					<div class="xzbb">
+						<p>选择版本</p>
+						<div class="one " :class="{active:n==1}" @click="ys(1,1799)">4GB+64GB 全网通 <span >1799</span></div>
+						<div class="one" :class="{active:n==2}"  @click="ys(2,1999)">6GB+64GB 全网通<span >1999</span></div>
+					</div>
+					<br><br><br>
+					<div class="xzys">
+						<p>选择版本</p>
+						<div class="one" :class="{actived:m==1}" @click="yt(1)">金色</div>
+						<div class="one" :class="{actived:m==2}" @click="yt(2)">深灰</div>
+						<div class="one" :class="{actived:m==3}" @click="yt(3)">亮红</div>
+						<div class="one" :class="{actived:m==4}" @click="yt(4)">亮蓝</div>
+					</div>
+					<br><br><br>
+					<p>选择小米提供的保障服务</p>
+					<label>
+					<div class="one" :class="{active:f==1}" @click="yf(1,179,bx1)">
+						<input type="radio" name="radio"  @click="yw()">
+						
+						<span style="display:inline-block;">意外保障服务</span>
+						<p class="zt" >手机意外摔落/进水/碾压等损坏</p>
+						<span style="float: right;">179元</span>
+					</div>
+					</label>
+					<label>
+					<div class="one" :class="{active:f==2}" @click="yf(2,99,bx2)" >
+						<input type="radio" name="radio" @click="yw()" >
+						
+						<span style="display:inline-block;">碎屏保障服务</span>
+						<p class="zt" >手机意外碎屏</p> 
+						<span style="float: right;">99元</span>
+					</div></label>
+					<div class="total">
+						  {{zz}}    <div style="float: right;">{{this.goods_price}}元</div>
+						<br>
+						   {{this.goods_bx}}  <div class="dd">{{color}}</div> <div style="float: right;">{{this.goods_Insurance}}元</div>
+						<br>
+						
+						<br>
+						总价：{{this.goods_price+this.goods_Insurance}}元
+					</div>
+				</div>
+                   
+			</section>
+
+		</div>
+		<style>
+			.popup_b {
+				background-color: #333;
+				opacity: 0.5;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.address {
+				background: white;
+				width: 400px;
+				height: 300px;
+				position: relative;
+				z-index: 2;
+			}
+		</style>
+
+		<template id="popup_box">
+			<div v-show="value">
+				<div class="popup_b"></div>
+				<div class="address">
+					<slot></slot>
+				</div>
+			</div>
+		</template>
+
+		<script>
+			Vue.component("popup", {
+				template: '#popup_box',
+				props: {
+					value: ''
+				},
+
+			})
+
+			new Vue({
+				el: '#app',
+				data: {
+					popupStatu: false,
+					n: 1,
+					m: 1,
+					f: 0,
+					g: 0,
+					goods_price:null,
+					goods_Insurance:null,
+					zzs:['4GB+64GB 全网通','6GB+64GB 全网通'],
+					zz:'4GB+64GB 全网通',
+					bx1:'意外保障服务',
+					bx2:'碎屏保障服务',
+					imgs:["img/1.png ","img/2.png ","img/3.png ","img/4.png "],
+					tp:null,
+					img:"img/1.png",
+					colors:["金色","深灰","亮红","亮蓝"],
+					color:"金色",
+					goods_price:1799
+				},
+				
+
+				methods: {
+					ys: function(e,price) {
+						this.n = e
+						this.goods_price = price
+						this.zz=this.zzs[e-1]
+					},
+					yt: function(a) {
+						this.m = a    
+						this.img=this.imgs[a-1]
+ 					     this.color=this.colors[a-1]
+              
+						
+						 
+					},
+					yf: function(d,prices,bx) {
+						this.f = d
+						this.goods_Insurance = prices
+						this.goods_bx=bx
+						
+					},
+                  
+                  
+                   }
+				
+
+			})
+		</script> 
+
+	</body>
+
+</html>
